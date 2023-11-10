@@ -1,0 +1,8 @@
+# This code will: 
+# Read in a csv or data frame 
+# create a plot of the variable over time 
+# Apply a regression line to
+# Export the plot to a jpeg (or pdf?) in a user chosen format 
+#
+
+
