@@ -3,82 +3,158 @@
 import pandas as pd
 import plotly.express as px
 import ggplot2 as gp
+import pandas as pd
+import plotly.express as px
+import scipy.stats as stats
 
 
-# Function 1a: Create a scatter plot of variable over time 
-# inputs: time vector and variable vector 
+
+#--------------------------------------------------------------------------------------------------------------------------------------
+
+# Function 1a: Create a scatter plot of a variable vs time using plotly
+# inputs: time vector, variable vector 
 # output: scatterplot using plotly express
-# Title: frequency, name of the variable, and time period (ex. "Weekly DO2 from July to August)
-# Y axis: variable name and units  
-# X Axis Time (frequency) ex. ( Week , day, etx. )
+# Title: Variable name and time period of Time vector (ex.  DO2 from July to August)
+# Y axis label: variable name and units  
+# X Axis label: Time 
 
+def create_scatter_plot(time_vector, variable_vector, variable_name, time_period_start, time_period_end):
+    """
+    Create a scatter plot of a variable vs time using Plotly Express.
+
+    Parameters:
+    - time_vector (list or array): The time values.
+    - variable_vector (list or array): The variable values.
+    - variable_name (str): The name of the variable.
+    - time_period_start (str): The start of the time period.
+    - time_period_end (str): The end of the time period.
+
+    Returns:
+    - fig (plotly.graph_objs.Figure): The scatter plot figure.
+    """
+
+    # Create a DataFrame for Plotly Express
+    data = pd.DataFrame({'Time': time_vector, variable_name: variable_vector})
+
+    # Create scatter plot
+    fig = px.scatter(data, x='Time', y=variable_name,
+                     title=f'{variable_name} from {time_period_start} to {time_period_end}',
+                     labels={'Time': 'Time', variable_name: variable_name})
+
+    return fig
+#--------------------------------------------------------------------------------------------------------------------------------------------
 
 # Function 1b: Create a line plot of variable over time 
-# inputs: time vector and variable vector 
+# inputs: time vector , variable vector 
 # output: scatterplot using plotly express
 # Title: frequency, name of the variable, and time period (ex. "Weekly DO2 from July to August)
-# Y axis: variable name and units  
+# Y axis: variable name 
 # X Axis Time (frequency) ex. ( Week , day, etx. )
 
+import pandas as pd
+import plotly.express as px
 
-# FUNCTION 1A lineplot of time vs chosen variable 
-
-def lineplot(dataframe, time, variable):
+def create_line_plot(time_vector, variable_vector, variable_name, time_period_start, time_period_end):
     """
-    Create a line plot based on selected data in a data frame.
+    Create a line plot of a variable vs time using Plotly Express.
 
-    Inputs:
-    - dataframe: Pandas DataFrame containing time and variable columns.
-    - time: Name of the column containing time data.
-    - variable: Name of the column containing variable data.
+    Parameters:
+    - time_vector (list or array): The time values.
+    - variable_vector (list or array): The variable values.
+    - variable_name (str): The name of the variable.
+    - time_period_start (str): The start of the time period.
+    - time_period_end (str): The end of the time period.
 
-    Returns: Plotly figure object.
+    Returns:
+    - fig (plotly.graph_objs.Figure): The line plot figure.
     """
-    var_name = variable #variable name
-    fig = px.line(dataframe, x=time, y=variable, title='Line Plot')
 
-    # Customize axis labels
-    fig.update_xaxes(title_text=time)
-    fig.update_yaxes(title_text=var_name)
+    # Create a DataFrame for Plotly Express
+    data = pd.DataFrame({'Time': time_vector, variable_name: variable_vector})
+
+    # Create line plot
+    fig = px.line(data, x='Time', y=variable_name,
+                  title=f'{variable_name} from {time_period_start} to {time_period_end}',
+                  labels={'Time': 'Time', variable_name: variable_name})
 
     return fig
 
-# FUNCTION 2B scatterplot of time vs chosen variable  
-
-def scatterplot(dataframe, time, variable):
-    """
-    Create a scatter plot based on selected data in a data frame.
-
-    Inputs:
-    - dataframe: Pandas DataFrame containing time and variable columns.
-    - time: Name of the column containing time data.
-    - variable: Name of the column containing variable data.
-
-    Returns: Plotly figure object.
-    """
-    var_name = variable  # variable name
-    fig = px.scatter(dataframe, x=time, y=variable, title='var_name')
-
-    # Customize axis labels
-    fig.update_xaxes(title_text=time)
-    fig.update_yaxes(title_text=var_name)
-
-    return fig
 
 
 #Function 2a: Calculate a linear regression and add it to the plot 
 # takes plot created in function 1, adds a linear regression line, and exports a new plot with the line on it
-# R2 fit
-# Error? 
+# input: plot from function 1
 
-#Function 2b: Calculate a LOESS curve and add it to the plot 
-# takes plot created in function 1, adds a linear regression line, and exports a new plot with the line on it
-# R2 fit
-# Error? 
+def add_linear_regression(time_vector, variable_vector, variable_name, time_period_start, time_period_end):
+    """
+    Create a line plot of a variable vs time using Plotly Express and add a linear regression line.
+
+    Parameters:
+    - time_vector (list or array): The time values.
+    - variable_vector (list or array): The variable values.
+    - variable_name (str): The name of the variable.
+    - time_period_start (str): The start of the time period.
+    - time_period_end (str): The end of the time period.
+
+    Returns:
+    - fig (plotly.graph_objs.Figure): The line plot with linear regression line.
+    """
+
+    # Create a DataFrame for Plotly Express
+    data = pd.DataFrame({'Time': time_vector, variable_name: variable_vector})
+
+    # Create line plot
+    fig = px.line(data, x='Time', y=variable_name,
+                  title=f'{variable_name} from {time_period_start} to {time_period_end}',
+                  labels={'Time': 'Time', variable_name: variable_name})
+
+    # Calculate linear regression
+    slope, intercept, r_value, p_value, std_err = stats.linregress(time_vector, variable_vector)
+
+    # Add linear regression line to the plot
+    fig.add_scatter(x=time_vector, y=[slope * t + intercept for t in time_vector],
+                    mode='lines', name='Linear Regression')
+
+    return fig
+
 
 #Function 3a : Export the plot to a user defined directory as a .jpg
-# Inputs: directory location, plot object 
+# Inputs: directory location, plot object
 # outputs: .jpeg in the specified directory 
+
+
+def add_linear_regression(time_vector, variable_vector, variable_name, time_period_start, time_period_end):
+    """
+    Create a line plot of a variable vs time using Plotly Express and add a linear regression line.
+
+    Parameters:
+    - time_vector (list or array): The time values.
+    - variable_vector (list or array): The variable values.
+    - variable_name (str): The name of the variable.
+    - time_period_start (str): The start of the time period.
+    - time_period_end (str): The end of the time period.
+
+    Returns:
+    - fig (plotly.graph_objs.Figure): The line plot with linear regression line.
+    """
+
+    # Create a DataFrame for Plotly Express
+    data = pd.DataFrame({'Time': time_vector, variable_name: variable_vector})
+
+    # Create line plot
+    fig = px.line(data, x='Time', y=variable_name,
+                  title=f'{variable_name} from {time_period_start} to {time_period_end}',
+                  labels={'Time': 'Time', variable_name: variable_name})
+
+    # Calculate linear regression
+    slope, intercept, r_value, p_value, std_err = stats.linregress(time_vector, variable_vector)
+
+    # Add linear regression line to the plot
+    fig.add_scatter(x=time_vector, y=[slope * t + intercept for t in time_vector],
+                    mode='lines', name='Linear Regression')
+
+    return fig
+
 
 #Function 3b : Export the plot to a user defined directory as a .pdf
 # Inputs: directory location, plot object 
