@@ -1,8 +1,96 @@
-# This code will: 
-# Read in a csv or data frame 
-# create a plot of the variable over time 
-# Apply a regression line to
-# Export the plot to a jpeg (or pdf?) in a user chosen format 
-#
+
+### import all of the necessary pages 
+import pandas as pd
+import plotly.express as px
+import ggplot2 as gp
+
+
+# Function 1a: Create a scatter plot of variable over time 
+# inputs: time vector and variable vector 
+# output: scatterplot using plotly express
+# Title: frequency, name of the variable, and time period (ex. "Weekly DO2 from July to August)
+# Y axis: variable name and units  
+# X Axis Time (frequency) ex. ( Week , day, etx. )
+
+
+# Function 1b: Create a line plot of variable over time 
+# inputs: time vector and variable vector 
+# output: scatterplot using plotly express
+# Title: frequency, name of the variable, and time period (ex. "Weekly DO2 from July to August)
+# Y axis: variable name and units  
+# X Axis Time (frequency) ex. ( Week , day, etx. )
+
+
+# FUNCTION 1A lineplot of time vs chosen variable 
+
+def lineplot(dataframe, time, variable):
+    """
+    Create a line plot based on selected data in a data frame.
+
+    Inputs:
+    - dataframe: Pandas DataFrame containing time and variable columns.
+    - time: Name of the column containing time data.
+    - variable: Name of the column containing variable data.
+
+    Returns: Plotly figure object.
+    """
+    var_name = variable #variable name
+    fig = px.line(dataframe, x=time, y=variable, title='Line Plot')
+
+    # Customize axis labels
+    fig.update_xaxes(title_text=time)
+    fig.update_yaxes(title_text=var_name)
+
+    return fig
+
+# FUNCTION 2B scatterplot of time vs chosen variable  
+
+def scatterplot(dataframe, time, variable):
+    """
+    Create a scatter plot based on selected data in a data frame.
+
+    Inputs:
+    - dataframe: Pandas DataFrame containing time and variable columns.
+    - time: Name of the column containing time data.
+    - variable: Name of the column containing variable data.
+
+    Returns: Plotly figure object.
+    """
+    var_name = variable  # variable name
+    fig = px.scatter(dataframe, x=time, y=variable, title='var_name')
+
+    # Customize axis labels
+    fig.update_xaxes(title_text=time)
+    fig.update_yaxes(title_text=var_name)
+
+    return fig
+
+
+#Function 2a: Calculate a linear regression and add it to the plot 
+# takes plot created in function 1, adds a linear regression line, and exports a new plot with the line on it
+# R2 fit
+# Error? 
+
+#Function 2b: Calculate a LOESS curve and add it to the plot 
+# takes plot created in function 1, adds a linear regression line, and exports a new plot with the line on it
+# R2 fit
+# Error? 
+
+#Function 3a : Export the plot to a user defined directory as a .jpg
+# Inputs: directory location, plot object 
+# outputs: .jpeg in the specified directory 
+
+#Function 3b : Export the plot to a user defined directory as a .pdf
+# Inputs: directory location, plot object 
+# outputs: .jpeg in the specified directory 
+
+
+
+
+
+
+
+
+
 
 
