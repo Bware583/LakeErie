@@ -1,4 +1,8 @@
 from plotnine import ggplot, aes, geom_point, labs, theme
+import pandas as pd
+    
+data = pd.DataFrame({'Time': time_vector, variable_name: variable_vector})
+
 
 ########## Function 1a: Create a scatter plot 
 
@@ -15,11 +19,7 @@ def create_scatter_plot(time_vector, variable_vector, variable_name, time_period
     Returns:
     - p (plotnine.ggplot): The scatter plot.
     """
-
-    # Create a DataFrame for plotnine
-    import pandas as pd
-    data = pd.DataFrame({'Time': time_vector, variable_name: variable_vector})
-
+    
     # Create scatter plot
     p = ggplot(data, aes(x='Time', y=variable_name)) + \
         geom_point() + \
@@ -92,6 +92,8 @@ def add_linear_regression(time_vector, variable_vector, variable_name, time_peri
 
     return p
 
+
+
 ######## Function 2b  Create the same plot as above but with a LOESS curve 
 
 def add_linear_regression(time_vector, variable_vector, variable_name, time_period_start, time_period_end):
@@ -124,6 +126,8 @@ def add_linear_regression(time_vector, variable_vector, variable_name, time_peri
     return p
 
 
+
+
 #### Function 3a : Export to specified directory as .jpg 
 
 def export_plot_to_jpg(directory, p, filename='plot'):
@@ -150,6 +154,7 @@ def export_plot_to_jpg(directory, p, filename='plot'):
     return filepath
 
 
+
 #### Function 3b: Export to specified directory ad a .pdf 
 
 def export_plot_to_pdf(directory, p, filename='plot'):
@@ -174,3 +179,5 @@ def export_plot_to_pdf(directory, p, filename='plot'):
     p.save(filepath, width=8, height=6, units='in', dpi=300, format='pdf')
 
     return filepath
+
+
