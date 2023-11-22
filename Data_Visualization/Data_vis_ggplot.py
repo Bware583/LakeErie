@@ -10,75 +10,57 @@ data = pd.read_csv('/Users/benjaminmakhlouf/Desktop/Merged.csv')
 print(data.dtypes)
 data['Time'] = pd.to_datetime(data['Time'])
 
-
-def create_scatter_plot(data, time_period_start, time_period_end, frequency):
+def create_time_series_plot(data, time_period_start, time_period_end, frequency, plot_type):
     """
-    Create a scatter plot of a variable vs time using plotnine.
+    Create a time series plot of a variable vs time using plotnine.
 
     Parameters:
     - data (pd.DataFrame): The DataFrame containing "Time", "Location", "variable", and "value" columns.
-    - time_period (str): The time period description.
+    - time_period_start (str): The start of the time period description.
+    - time_period_end (str): The end of the time period description.
+    - frequency (str): The frequency description.
+    - plot_type (str): The type of plot to create ("scatter" or "line").
 
     Returns:
-    - p (plotnine.ggplot): The scatter plot.
+    - p (plotnine.ggplot): The time series plot.
     """
-
     # Check if the required columns are present in the DataFrame
     required_columns = ["Time", "Location", "variable", "value"]
     if not set(required_columns).issubset(data.columns):
         raise ValueError(f"The DataFrame must contain the following columns: {', '.join(required_columns)}.")
 
-    # Create scatter plot
-    p = ggplot(data, aes(x='Time', y='value', color='variable')) + \
-    geom_point()+\
-    ggtitle(f"{frequency} data from {time_period_start} to {time_period_end}")
+    # Create plot based on plot_type
+    if plot_type == "scatter":
+        p = ggplot(data, aes(x='Time', y='value', color='variable')) + \
+            geom_point() + \
+            ggtitle(f"{frequency} data from {time_period_start} to {time_period_end}")
+    elif plot_type == "line":
+        p = ggplot(data, aes(x='Time', y='value', color='variable')) + \
+            geom_line() + \
+            ggtitle(f"{frequency} data from {time_period_start} to {time_period_end}")
+    else:
+        raise ValueError("Invalid plot_type. Supported values are 'scatter' or 'line'.")
 
     # Check if the plot was successfully created
     if p is None:
-        raise ValueError("Failed to create the scatter plot.")
-
-    return p
-
-
-def create_line_plot(data, time_period_start, time_period_end, frequency):
-    """
-    Create a LINE plot of a variable vs time using plotnine.
-
-    Parameters:
-    - data (pd.DataFrame): The DataFrame containing "Time", "Location", "variable", and "value" columns.
-    - time_period (str): The time period description.
-
-    Returns:
-    - p (plotnine.ggplot): The scatter plot.
-    """
-
-    # Check if the required columns are present in the DataFrame
-    required_columns = ["Time", "Location", "variable", "value"]
-    if not set(required_columns).issubset(data.columns):
-        raise ValueError(f"The DataFrame must contain the following columns: {', '.join(required_columns)}.")
-
-    # Create scatter plot
-    p = ggplot(data, aes(x='Time', y='value', color='variable')) + \
-    geom_line()+\
-    ggtitle(f"{frequency} data from {time_period_start} to {time_period_end}")
-
-    # Check if the plot was successfully created
-    if p is None:
-        raise ValueError("Failed to create the scatter plot.")
+        raise ValueError("Failed to create the time series plot.")
 
     return p
 
 
 def trendline(data, time_period_start, time_period_end, frequency, trendline_type):
     """
-    Add a trend line of the users choice to the plot 
+    Add a trend line of the user's choice to the plot.
 
     Parameters:
     - data (pd.DataFrame): The DataFrame containing "Time", "Location", "variable", and "value" columns.
-    - time_period (str): The time period description.
+    - time_period_start (str): The start of the time period description.
+    - time_period_end (str): The end of the time period description.
+    - frequency (str): The frequency description.
+    - trendline_type (str): The type of trendline to add ("LOESS" or "linear regression").
 
     Returns:
-    - p (plotnine.ggplot): The scatter plot.
+    - p (plotnine.ggplot): The scatter plot with the specified trendline.
     """
 
     # Check if the required columns are present in the DataFrame
@@ -88,8 +70,8 @@ def trendline(data, time_period_start, time_period_end, frequency, trendline_typ
 
     # Create scatter plot
     p = ggplot(data, aes(x='Time', y='value', color='variable')) + \
-    geom_line()+\
-    ggtitle(f"{frequency} data from {time_period_start} to {time_period_end}")
+        geom_line() + \
+        ggtitle(f"{frequency} data from {time_period_start} to {time_period_end}")
 
     # Add trendline based on the specified type
     if trendline_type == "LOESS":
@@ -98,15 +80,13 @@ def trendline(data, time_period_start, time_period_end, frequency, trendline_typ
         p = p + geom_smooth(method="lm", se=False)  # You can customize se parameter as needed
     else:
         raise ValueError("Invalid trendline_type. Supported values are 'LOESS' or 'linear regression'.")
-     
+
     # Check if the plot was successfully created
     if p is None:
         raise ValueError("Failed to create the scatter plot.")
 
     return p
 
-
-#### Function 3b: Export to specified directory ad a .pdf
 
 def export_plot(p, export_type):
     """
