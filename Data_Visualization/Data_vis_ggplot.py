@@ -113,3 +113,5 @@ def export_plot(p, export_type):
 
     # Save the plot using ggsave
     ggsave(p, file_path, device=export_type[1:], dpi=300)
+
+    
