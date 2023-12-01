@@ -1,336 +1,173 @@
-
-import unittest
-import pandas as pd
-from your_script import create_scatter_plot  # Replace 'your_script' with the actual name of your script
-
-class TestCreateScatterPlot(unittest.TestCase):
-
-    def test_successful_plot_creation(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-        variable_name = "Variable"
-        time_period = "Test Period"
-
-        # Ensure no errors are raised
-        try:
-            plot = create_scatter_plot(time_vector, variable_vector, variable_name, time_period)
-        except Exception as e:
-            self.fail(f"create_scatter_plot raised an unexpected exception: {str(e)}")
-
-        # Ensure the plot is not None
-        self.assertIsNotNone(plot)
-
-    def test_mismatched_vector_lengths(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25]  # Mismatched length
-
-        with self.assertRaises(ValueError):
-            create_scatter_plot(time_vector, variable_vector, "Variable", "Test Period")
-
-    def test_empty_vectors(self):
-        time_vector = []
-        variable_vector = []
-
-        with self.assertRaises(ValueError):
-            create_scatter_plot(time_vector, variable_vector, "Variable", "Test Period")
-
-    def test_non_numeric_data(self):
-        time_vector = [1, 2, 3, "four", 5]  # Non-numeric element
-        variable_vector = [10, 20, 15, 25, 30]
-
-        with self.assertRaises(ValueError):
-            create_scatter_plot(time_vector, variable_vector, "Variable", "Test Period")
-
-    def test_empty_time_period(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-
-        with self.assertRaises(ValueError):
-            create_scatter_plot(time_vector, variable_vector, "Variable", "")
-
-    def test_successful_plot_creation_with_existing_data(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-        variable_name = "Variable"
-        time_period = "Test Period"
-
-        # Create a DataFrame to be used as existing data
-        existing_data = pd.DataFrame({'Time': time_vector, variable_name: variable_vector})
-
-        # Set the global data variable
-        global data
-        data = existing_data.copy()
-
-        # Ensure no errors are raised
-        try:
-            plot = create_scatter_plot(time_vector, variable_vector, variable_name, time_period)
-        except Exception as e:
-            self.fail(f"create_scatter_plot raised an unexpected exception: {str(e)}")
-
-        # Ensure the plot is not None
-        self.assertIsNotNone(plot)
-
-###################################################################################################
-
-class TestCreateLinePlot(unittest.TestCase):
-
-    def test_successful_plot_creation(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-        variable_name = "Variable"
-        time_period_start = "Start Period"
-        time_period_end = "End Period"
-
-        # Ensure no errors are raised
-        try:
-            plot = create_line_plot(time_vector, variable_vector, variable_name, time_period_start, time_period_end)
-        except Exception as e:
-            self.fail(f"create_line_plot raised an unexpected exception: {str(e)}")
-
-        # Ensure the plot is not None
-        self.assertIsNotNone(plot)
-
-    def test_mismatched_vector_lengths(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25]  # Mismatched length
-
-        with self.assertRaises(ValueError):
-            create_line_plot(time_vector, variable_vector, "Variable", "Start Period", "End Period")
-
-    def test_empty_vectors(self):
-        time_vector = []
-        variable_vector = []
-
-        with self.assertRaises(ValueError):
-            create_line_plot(time_vector, variable_vector, "Variable", "Start Period", "End Period")
-
-    def test_non_numeric_data(self):
-        time_vector = [1, 2, 3, "four", 5]  # Non-numeric element
-        variable_vector = [10, 20, 15, 25, 30]
-
-        with self.assertRaises(ValueError):
-            create_line_plot(time_vector, variable_vector, "Variable", "Start Period", "End Period")
-
-    def test_empty_time_periods(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-
-        with self.assertRaises(ValueError):
-            create_line_plot(time_vector, variable_vector, "Variable", "", "")
-
-    def test_successful_plot_creation_with_existing_data(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-        variable_name = "Variable"
-        time_period_start = "Start Period"
-        time_period_end = "End Period"
-
-        # Create a DataFrame to be used as existing data
-        existing_data = pd.DataFrame({'Time': time_vector, variable_name: variable_vector})
-
-        # Set the global data variable
-        global data
-        data = existing_data.copy()
-
-        # Ensure no errors are raised
-        try:
-            plot = create_line_plot(time_vector, variable_vector, variable_name, time_period_start, time_period_end)
-        except Exception as e:
-            self.fail(f"create_line_plot raised an unexpected exception: {str(e)}")
-
-        # Ensure the plot is not None
-        self.assertIsNotNone(plot)
-
-############################################################################################################
-
-import unittest
-import pandas as pd
-from plot_functions import create_scatter_plot, create_line_plot, add_linear_regression  # Replace 'plot_functions' with the actual name of your script
-
-class TestAddLinearRegression(unittest.TestCase):
-
-    def test_successful_plot_creation(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-        variable_name = "Variable"
-        time_period_start = "Start Period"
-        time_period_end = "End Period"
-
-        # Create a scatter plot to add linear regression to
-        scatter_plot = create_scatter_plot(time_vector, variable_vector, variable_name, "Test Period")
-
-        # Ensure no errors are raised
-        try:
-            plot = add_linear_regression(time_vector, variable_vector, variable_name, time_period_start, time_period_end)
-        except Exception as e:
-            self.fail(f"add_linear_regression raised an unexpected exception: {str(e)}")
-
-        # Ensure the plot is not None
-        self.assertIsNotNone(plot)
-
-    def test_mismatched_vector_lengths(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25]  # Mismatched length
-
-        with self.assertRaises(ValueError):
-            add_linear_regression(time_vector, variable_vector, "Variable", "Start Period", "End Period")
-
-    def test_empty_vectors(self):
-        time_vector = []
-        variable_vector = []
-
-        with self.assertRaises(ValueError):
-            add_linear_regression(time_vector, variable_vector, "Variable", "Start Period", "End Period")
-
-    def test_non_numeric_data(self):
-        time_vector = [1, 2, 3, "four", 5]  # Non-numeric element
-        variable_vector = [10, 20, 15, 25, 30]
-
-        with self.assertRaises(ValueError):
-            add_linear_regression(time_vector, variable_vector, "Variable", "Start Period", "End Period")
-
-    def test_empty_time_periods(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-
-        with self.assertRaises(ValueError):
-            add_linear_regression(time_vector, variable_vector, "Variable", "", "")
-
-    def test_successful_plot_creation_with_existing_data(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-        variable_name = "Variable"
-        time_period_start = "Start Period"
-        time_period_end = "End Period"
-
-        # Create a line plot to add linear regression to
-        line_plot = create_line_plot(time_vector, variable_vector, variable_name, time_period_start, time_period_end)
-
-        # Ensure no errors are raised
-        try:
-            plot = add_linear_regression(time_vector, variable_vector, variable_name, time_period_start, time_period_end)
-        except Exception as e:
-            self.fail(f"add_linear_regression raised an unexpected exception: {str(e)}")
-
-        # Ensure the plot is not None
-        self.assertIsNotNone(plot)
-
-
-################################################################################################################################
-
-class TestAddLoessCurve(unittest.TestCase):
-
-    def test_successful_plot_creation(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-        variable_name = "Variable"
-        time_period_start = "Start Period"
-        time_period_end = "End Period"
-
-        # Create a scatter plot to add LOESS curve to
-        scatter_plot = create_scatter_plot(time_vector, variable_vector, variable_name, "Test Period")
-
-        # Ensure no errors are raised
-        try:
-            plot = add_loess_curve(time_vector, variable_vector, variable_name, time_period_start, time_period_end)
-        except Exception as e:
-            self.fail(f"add_loess_curve raised an unexpected exception: {str(e)}")
-
-        # Ensure the plot is not None
-        self.assertIsNotNone(plot)
-
-    def test_mismatched_vector_lengths(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25]  # Mismatched length
-
-        with self.assertRaises(ValueError):
-            add_loess_curve(time_vector, variable_vector, "Variable", "Start Period", "End Period")
-
-    def test_empty_vectors(self):
-        time_vector = []
-        variable_vector = []
-
-        with self.assertRaises(ValueError):
-            add_loess_curve(time_vector, variable_vector, "Variable", "Start Period", "End Period")
-
-    def test_non_numeric_data(self):
-        time_vector = [1, 2, 3, "four", 5]  # Non-numeric element
-        variable_vector = [10, 20, 15, 25, 30]
-
-        with self.assertRaises(ValueError):
-            add_loess_curve(time_vector, variable_vector, "Variable", "Start Period", "End Period")
-
-    def test_empty_time_periods(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-
-        with self.assertRaises(ValueError):
-            add_loess_curve(time_vector, variable_vector, "Variable", "", "")
-
-    def test_successful_plot_creation_with_existing_data(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-        variable_name = "Variable"
-        time_period_start = "Start Period"
-        time_period_end = "End Period"
-
-        # Create a line plot to add LOESS curve to
-        line_plot = create_line_plot(time_vector, variable_vector, variable_name, time_period_start, time_period_end)
-
-        # Ensure no errors are raised
-        try:
-            plot = add_loess_curve(time_vector, variable_vector, variable_name, time_period_start, time_period_end)
-        except Exception as e:
-            self.fail(f"add_loess_curve raised an unexpected exception: {str(e)}")
-
-        # Ensure the plot is not None
-        self.assertIsNotNone(plot)
-
-
-
-##############################################################
-
-
-class TestExportPlotToJpg(unittest.TestCase):
-
-    def test_successful_export(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-        variable_name = "Variable"
-        time_period = "Test Period"
-
-        # Create a scatter plot to export
-        scatter_plot = create_scatter_plot(time_vector, variable_vector, variable_name, time_period)
-
-        # Ensure no errors are raised during export
-        try:
-            filepath = export_plot_to_jpg('test_output', scatter_plot, 'scatter_plot')
-        except Exception as e:
-            self.fail(f"export_plot_to_jpg raised an unexpected exception: {str(e)}")
-
-        # Ensure the file exists
-        self.assertTrue(os.path.exists(filepath))
-
-        # Clean up: Remove the created file
-        os.remove(filepath)
-
-    def test_invalid_ggplot_object(self):
-        # Create an invalid ggplot object
-        invalid_plot = "This is not a ggplot object"
-
-        # Ensure a ValueError is raised for an invalid ggplot object
-        with self.assertRaises(ValueError):
-            export_plot_to_jpg('test_output', invalid_plot, 'invalid_plot')
-
-    def test_nonexistent_directory(self):
-        time_vector = [1, 2, 3, 4, 5]
-        variable_vector = [10, 20, 15, 25, 30]
-        variable_name = "Variable"
-        time_period = "Test Period"
-
-        # Create a scatter plot to export
-        scatter_plot = create_scatter_plot(time_vector, variable_vector, variable_name, time_period)
-
-        # Attempt to export to a nonexistent directory
-        with self.assertRaises(FileNotFoundError):
-            export_plot_to_jpg('nonexistent_directory', scatter_plot, 'scatter_plot')
+"""Unit tests for anomaly.py"""
+
+### Tests for CreateTrendline   
+
+class TestCreateTrendline(unittest.TestCase):
+    def setUp(self):
+        # Create sample data for testing
+        data_str = """times,value_mean
+        2023-01-01,25
+        2023-01-02,26
+        2023-01-03,24
+        2023-01-04,23
+        2023-01-05,22
+        """
+        self.data = pd.read_csv(StringIO(data_str))
+        self.data['times'] = pd.to_datetime(self.data['times'])
+
+    def test_valid_data(self):
+        with patch('plotly.io.show') as mock_show:
+            create_trendline(self.data)
+            mock_show.assert_called()
+
+    def test_missing_times_column(self):
+        data_without_times = self.data.drop(columns=['times'])
+        with self.assertRaises(ValueError, msg="Expected ValueError for missing 'times' column."):
+            create_trendline(data_without_times)
+
+    def test_missing_value_mean_column(self):
+        data_without_value_mean = self.data.drop(columns=['value_mean'])
+        with self.assertRaises(ValueError, msg="Expected ValueError for missing 'value_mean' column."):
+            create_trendline(data_without_value_mean)
+
+    def test_non_datetime_times_column(self):
+        data_non_datetime_times = self.data.copy()
+        data_non_datetime_times['times'] = data_non_datetime_times['times'].astype(str)
+        with self.assertRaises(ValueError, msg="Expected ValueError for non-datetime 'times' column."):
+            create_trendline(data_non_datetime_times)
+
+    def test_empty_data(self):
+        empty_data = pd.DataFrame()
+        with self.assertRaises(ValueError, msg="Expected ValueError for empty data."):
+            create_trendline(empty_data)
+
+    def test_non_numeric_value_mean_column(self):
+        data_non_numeric_value_mean = self.data.copy()
+        data_non_numeric_value_mean['value_mean'] = ['a', 'b', 'c', 'd', 'e']
+        with self.assertRaises(ValueError, msg="Expected ValueError for non-numeric 'value_mean' column."):
+            create_trendline(data_non_numeric_value_mean)
+
+
+#### Tests for CreateAnomalyGraph
+
+class TestCreateAnomalyGraph(unittest.TestCase):
+    def setUp(self):
+        # Create sample data for testing
+        data_str = """times,value_mean
+        2023-01-01,25
+        2023-01-02,26
+        2023-01-03,24
+        2023-01-04,23
+        2023-01-05,22
+        """
+        self.data = pd.read_csv(StringIO(data_str))
+        self.data['times'] = pd.to_datetime(self.data['times'])
+
+    def test_valid_data(self):
+        with patch('plotly.io.show') as mock_show, \
+             patch('pytimetk.anomalize') as mock_anomalize, \
+             patch('pytimetk.plot_anomalies') as mock_plot_anomalies:
+
+            create_anomaly_graph(self.data)
+
+            mock_anomalize.assert_called_once_with(
+                data=self.data,
+                date_column='times',
+                value_column='value_mean',
+                period=7,
+                iqr_alpha=0.05,
+                clean_alpha=0.75,
+                clean="min_max"
+            )
+
+            mock_plot_anomalies.assert_called_once_with(
+                data=mock_anomalize.return_value,
+                date_column='times',
+                engine='plotly',
+                title='Plot Anomaly Bands'
+            )
+
+            mock_show.assert_called_once_with(mock_plot_anomalies.return_value)
+
+    def test_missing_times_column(self):
+        data_without_times = self.data.drop(columns=['times'])
+        with self.assertRaises(ValueError, msg="Expected ValueError for missing 'times' column."):
+            create_anomaly_graph(data_without_times)
+
+    def test_missing_value_mean_column(self):
+        data_without_value_mean = self.data.drop(columns=['value_mean'])
+        with self.assertRaises(ValueError, msg="Expected ValueError for missing 'value_mean' column."):
+            create_anomaly_graph(data_without_value_mean)
+
+    def test_non_datetime_times_column(self):
+        data_non_datetime_times = self.data.copy()
+        data_non_datetime_times['times'] = data_non_datetime_times['times'].astype(str)
+        with self.assertRaises(ValueError, msg="Expected ValueError for non-datetime 'times' column."):
+            create_anomaly_graph(data_non_datetime_times)
+
+    def test_empty_data(self):
+        empty_data = pd.DataFrame()
+        with self.assertRaises(ValueError, msg="Expected ValueError for empty data."):
+            create_anomaly_graph(empty_data)
+
+    def test_non_numeric_value_mean_column(self):
+        data_non_numeric_value_mean = self.data.copy()
+        data_non_numeric_value_mean['value_mean'] = ['a', 'b', 'c', 'd', 'e']
+        with self.assertRaises(ValueError, msg="Expected ValueError for non-numeric 'value_mean' column."):
+            create_anomaly_graph(data_non_numeric_value_mean)
+
+
+## Tests for PlotAnomaliesDecomp
+
+class TestPlotAnomaliesDecomp(unittest.TestCase):
+    def setUp(self):
+        # Create sample data for testing
+        data_str = """times,value_mean
+        2023-01-01,25
+        2023-01-02,26
+        2023-01-03,24
+        2023-01-04,23
+        2023-01-05,22
+        """
+        self.data = pd.read_csv(StringIO(data_str))
+        self.data['times'] = pd.to_datetime(self.data['times'])
+
+    def test_valid_data(self):
+        with patch('plotly.io.show') as mock_show:
+            plot_anomalies_decomp(self.data)
+
+            mock_show.assert_called_once_with(
+                pytimetk.plot_anomalies_decomp(
+                    data=self.data,
+                    date_column='times',
+                    engine='plotly',
+                    title='Seasonal Decomposition'
+                )
+            )
+
+    def test_missing_times_column(self):
+        data_without_times = self.data.drop(columns=['times'])
+        with self.assertRaises(ValueError, msg="Expected ValueError for missing 'times' column."):
+            plot_anomalies_decomp(data_without_times)
+
+    def test_missing_value_mean_column(self):
+        data_without_value_mean = self.data.drop(columns=['value_mean'])
+        with self.assertRaises(ValueError, msg="Expected ValueError for missing 'value_mean' column."):
+            plot_anomalies_decomp(data_without_value_mean)
+
+    def test_non_datetime_times_column(self):
+        data_non_datetime_times = self.data.copy()
+        data_non_datetime_times['times'] = data_non_datetime_times['times'].astype(str)
+        with self.assertRaises(ValueError, msg="Expected ValueError for non-datetime 'times' column."):
+            plot_anomalies_decomp(data_non_datetime_times)
+
+    def test_empty_data(self):
+        empty_data = pd.DataFrame()
+        with self.assertRaises(ValueError, msg="Expected ValueError for empty data."):
+            plot_anomalies_decomp(empty_data)
+
+    def test_non_numeric_value_mean_column(self):
+        data_non_numeric_value_mean = self.data.copy()
+        data_non_numeric_value_mean['value_mean'] = ['a', 'b', 'c', 'd', 'e']
+        with self.assertRaises(ValueError, msg="Expected ValueError for non-numeric 'value_mean' column."):
+            plot_anomalies_decomp(data_non_numeric_value_mean)
