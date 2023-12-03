@@ -8,9 +8,8 @@ data = data[data['parameter'] == 'Air_Temperature']
 data = data.dropna(subset=['value_mean']).query('value_mean != 0')
 
 print(data)
-
-
 #### Data should be queried before it gets to the functions 
+
 
 def create_trendline(data):
     """
@@ -108,7 +107,7 @@ create_anomaly_graph(data)
 
 ### Show the statistical decomposition of the anamoly graph 
 
-def create_anomaly_graph(data):
+def create_anomaly_decomp_graph(data):
     """
     Create an anomaly graph with anomaly detection and plot.
 
