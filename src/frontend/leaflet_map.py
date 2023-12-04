@@ -1,24 +1,22 @@
 import folium 
 
-bouy_selected <- "Bouy 3"
-
 def map_main(selected_buoy):
     """
     Generate a Folium map with buoy locations and markers.
 
-    Parameters:
-    - selected_buoy (str): The name of the selected buoy.
+    Arguments:
+    selected_buoy (str): The name of the selected buoy.
 
     Returns:
-    - str: The HTML representation of the Folium map.
+    folium.Map: Folium map object showing buoy locations with markers.
 
     Raises:
-    - ValueError: If the selected_buoy is not in the predefined list of buoy names.
-    - ValueError: If latitude or longitude values for any buoy are not numeric.
+    ValueError: If the selected_buoy is not in the predefined list of buoy names.
+    ValueError: If latitude or longitude values for any buoy are not numeric.
     """
 
     # Define the center of the map (for example, using the coordinates of Buoy 3)
-    latitude, longitude = 51.5074, -0.1278
+    center_latitude, center_longitude = 51.5074, -0.1278
 
     # Define the buoy locations
     buoy_locations = [
@@ -43,7 +41,7 @@ def map_main(selected_buoy):
                              "Latitude and longitude must be numeric.")
 
     # Create a map object using Folium
-    m = folium.Map(location=[latitude, longitude], zoom_start=13)
+    m = folium.Map(location=[center_latitude, center_longitude], zoom_start=13)
 
     # Add markers for each buoy
     for buoy in buoy_locations:
@@ -51,7 +49,4 @@ def map_main(selected_buoy):
         folium.Marker([buoy["latitude"], buoy["longitude"]],
                       popup=buoy["name"], icon=folium.Icon(color=color)).add_to(m)
 
-    # Save the map as an HTML string
-    map_html = m._repr_html_()
-
-    return map_html
+    return m
