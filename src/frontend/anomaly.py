@@ -122,7 +122,7 @@ def create_anomaly_graph(data, times, value_mean, period=7, iqr_alpha=0.05, clea
 
     return anomplot
 
-def create_anomaly_decomp_graph(data, times='times', value_mean='value_mean', period=7, iqr_alpha=0.05, clean_alpha=0.75):
+def anomaly_decomp(data, times='times', value_mean='value_mean', period=7, iqr_alpha=0.05, clean_alpha=0.75):
     """
     Create an anomaly graph with anomaly detection and plot.
 
