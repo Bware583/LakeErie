@@ -1,4 +1,4 @@
-name: jupytertesting
+name: lakeerie
 channels:
   - defaults
 dependencies:
