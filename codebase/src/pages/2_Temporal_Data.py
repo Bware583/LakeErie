@@ -11,18 +11,19 @@ import os
 import datetime
 import streamlit as st
 import pandas as pd
+import pathlib
 import plotly.express as px
 from plotly import graph_objects
 import numpy as np
 
-def df_creation(current_file_dir: str,
+def df_creation(data_dir: str,
                  frequency: str) -> pd.DataFrame():
     """
     Create dataframe using user-selected sites.
 
     Arguments:
     ----------
-    current_file_dir (str): current file directory
+    data_dir (str): data folder directory
     frequency (str): frequency of data
 
     Returns:
@@ -58,7 +59,7 @@ def df_creation(current_file_dir: str,
         return df_chosen_locs
     else:
         # List comprehension to create list of paths to needed dataframes
-        df_dirs = [(current_file_dir + "/data/iChart6_data/processed/" + loc
+        df_dirs = [(data_dir + "/data/processed/ichart/" + loc
                         + frequency) for loc in locations_selected_call]
         # Concatenate all of the dfs into one
         df_chosen_locs = pd.concat(map(pd.read_csv, df_dirs))
@@ -239,11 +240,15 @@ frequency_selected = st.radio(
 
 # Relative path to /pages
 dirname = os.path.dirname(__file__)
+
+codebase_path = pathlib.Path(__file__).parents[2]
+print(f"CODEBASE PATH {codebase_path}")
+
 # Set location to correct frequency csv
 if frequency_selected == "Daily":
-    df = df_creation(dirname, "/daily_tidy_all_data.csv")
+    df = df_creation(str(codebase_path), "/daily_tidy_all_data.csv")
 else:
-    df = df_creation(dirname, "/hourly_tidy_all_data.csv")
+    df = df_creation(str(codebase_path), "/hourly_tidy_all_data.csv")
 
 # When user has not made a selection, display error message
 if df.empty:
@@ -252,7 +257,10 @@ else:
     #Convert time column to datetime
     df['times'] = pd.to_datetime(df['times'])
     # List of all weather station locations
-    locations_in_df = list(df['location'].unique())
+    #locations_in_df = list(df['location'].unique())
+    locations_path = os.path.join(codebase_path, r"/data/processed/ichart")
+    locations_in_df = [f.path for f in os.scandir(str(codebase_path) 
+                                                  + "/data/processed/ichart") if f.is_dir()]
     # List of all variable types
     variables_in_df = list(df['parameter'].unique())
     # Sidebar hides the drop-down
