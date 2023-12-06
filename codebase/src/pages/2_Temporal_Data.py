@@ -242,6 +242,7 @@ frequency_selected = st.radio(
 dirname = os.path.dirname(__file__)
 
 codebase_path = pathlib.Path(__file__).parents[2]
+# **Code won't run, but this will work when path is fixed.
 print(f"CODEBASE PATH {codebase_path}")
 
 # Set location to correct frequency csv
