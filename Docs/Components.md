@@ -3,26 +3,39 @@
 ## Cleaned Database Filler
 **Operation**   
 1. Call API with request for data within time frame (to avoid computational expense, API calls will be administered at a set frequency, hence the time frame).
-2. Remove data points that fall outside of the lowerbound to upperbound variable range.
-3. Return the cleaned collection of data as a database. 
-4. If percent of removed data points is 100%, send an email signaling buoy may require maintentance.
-5. Percentage of points removed and timestamp is recorded in an audit log to provide for easier maintenance.
+2. Combine datasets across all of the different data sources
+3. Downsample the data into usable datafile sizes.
+4. Return the cleaned collection of data as a database. 
+
+**Version 2**
+5. Add live data/continuous updates
+6. Remove data points that fall outside of the lowerbound to upperbound variable range.
+7. If percent of removed data points is 100%, send an email signaling buoy may require maintentance.
+8. Percentage of points removed and timestamp is recorded in an audit log to provide for easier maintenance.
 
 **Inputs**   
-* Extraneous data upperbound [float]
-* Extraneous data lowerbound [float]
 * Start time of data collection [datetime]
 * End time of data collection [datetime]
+* Uncleaned raw data files
 * Uncleaned database [database]  
 
+**Version 2**
+* Extraneous data upperbound [float]
+* Extraneous data lowerbound [float]
+
 **Outputs**  
-* Cleaned databse [database]
+* Cleaned database [database]
+
+**Version 2**
 * Percent of removed extraneous datapoints [int]
 * Timestamp of operation completion [int]
 
 **Component Interfacing**  
-* Component will pass data to cleaned database location, auditlog.txt will be updated with timestamp and data removal percentage
+* Component will pass data to cleaned database location
 * Cleaned database will be accessed by *Historical Data Plotter*
+
+**Version 2**
+* auditlog.txt will be updated with timestamp and data removal percentage
 
 
 ## Historical Data Plotter  
@@ -37,7 +50,7 @@
 * End time of data collection [datetime]
 * Climate Variable [string]
 * Frequency of collection [string]
-	* Daily, weekly, monthly  
+	* Daily, Hourly  
 
 **Outputs**  
 * Interactive (hover over for datapoint) plot of variable over time with trendline [GUI plot]

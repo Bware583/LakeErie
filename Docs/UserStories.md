@@ -15,8 +15,7 @@ clear and concise dashboard to define historical trends on different timescale.
 
 ## Third User - Sofware Engineering Student
 * This is the next user to integrate with the software. 
-* They are interested in upgrading the software to another version, 
-such as adding in other parameters to analyze. 
+* They are interested in upgrading the software to another version, such as adding in other parameters to analyze, or adding live data functionality.
     * This may also include debugging current/new issues on the program
 * They want to be able to understand the code and add parameters as 
 seamlessly as possible. 

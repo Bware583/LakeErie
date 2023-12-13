@@ -18,21 +18,28 @@
 
 Notes: 
 * May show all variables for one location or all locations for one variable. 
-* Could give the option to change units
 * Display anomalies rather than raw values
+
+**Version 2**
+* Could give the option to change units
 * Color coding timeseries to show above or below average
+
 
 ## Boaters/Fishermen
 ### Real-time report
 * Opens dashboard
     *Navigate to website url
+* View report that shows historical trends for the gien area
+
+    
+**Version 2**
 * Navigate to daily report
     * Click button that says "Today's Conditions"
-* View report that puts conditions in context
-    * How today compares to historical data
+* How today compares to historical data
 
-## Software Engineering Student
-### Debug issue
+## Version 2
+### Software Engineering Student
+#### Debug issue
 * Access Github repository
     * Github will handle authentication
 * Open audit log folder
