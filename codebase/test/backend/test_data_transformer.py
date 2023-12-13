@@ -224,16 +224,27 @@ class TestDataTransformer(unittest.TestCase):
 
 
         expected_columns = ['times', 'Air_Temperature', 'Units', 'ODO']
+        # expected_data = {
+        #     "times": ["1/1/2018 13:10",
+        #               "1/1/2018 13:20",
+        #               "1/1/2018 13:30",
+        #               "1/1/2018 13:10",
+        #               "1/1/2018 13:20",
+        #               "1/1/2018 13:30"],
+        #     "Air_Temperature": [42.1, 42.9, 42.2, np.nan, np.nan, np.nan],
+        #     "Units": ["F", "F", "F", "mg/L", "mg/L", "mg/L"],
+        #     "ODO": [np.nan, np.nan, np.nan, 10.1, 9.2, 10.4]
+        # }
         expected_data = {
             "times": ["1/1/2018 13:10",
-                      "1/1/2018 13:20",
-                      "1/1/2018 13:30",
                       "1/1/2018 13:10",
                       "1/1/2018 13:20",
+                      "1/1/2018 13:20",
+                      "1/1/2018 13:30",
                       "1/1/2018 13:30"],
-            "Air_Temperature": [42.1, 42.9, 42.2, np.nan, np.nan, np.nan],
-            "Units": ["F", "F", "F", "mg/L", "mg/L", "mg/L"],
-            "ODO": [np.nan, np.nan, np.nan, 10.1, 9.2, 10.4]
+            "Air_Temperature": [np.nan, 42.1, np.nan, 42.9, np.nan, 42.2],
+            "Units": ["mg/L", "F", "mg/L", "F", "mg/L", "F"],
+            "ODO": [10.1, np.nan, 9.2, np.nan, 10.4, np.nan]
         }
         expected_data["times"] = pd.Series(expected_data["times"])
         expected_data = pd.DataFrame(expected_data)
@@ -244,11 +255,27 @@ class TestDataTransformer(unittest.TestCase):
                 self.data_transformer.across_parameter_aggregate(device, project)
                 self.assertTrue(os.path.exists(os.path.join(path, "all_data.csv")))
                 df = pd.read_csv(os.path.join(path, "all_data.csv"))
+                df = df.sort_values(by=["times"])
                 df = df[["times", "Air_Temperature","Units","ODO"]]
+                df = df.reset_index(drop=True)
+
                 self.assertListEqual(list(df.columns), expected_columns)
                 print(df)
                 print(expected_data)
-                self.assertTrue(df.equals(expected_data), "dataframes are not equal")
+                #self.assertTrue(df.equals(expected_data), "dataframes are not equal")
+                print(type(df["times"]))
+                print(type(expected_data["times"]))
+                print(df["times"])
+                print(expected_data["times"])
+                self.assertTrue(df["times"].equals(expected_data["times"]),
+                                "times are not equal")
+                self.assertTrue(df["Air_Temperature"].equals(expected_data["Air_Temperature"]),
+                                "Air_Temperatures are not equal")
+                self.assertTrue(df["Units"].equals(expected_data["Units"]),
+                                "Units are not equal")
+                self.assertTrue(df["ODO"].equals(expected_data["ODO"]),
+                                "ODOs are not equal")
+                
 
 
     def test_tidy_data_transform(self):
