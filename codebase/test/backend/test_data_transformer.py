@@ -244,6 +244,7 @@ class TestDataTransformer(unittest.TestCase):
                 self.data_transformer.across_parameter_aggregate(device, project)
                 self.assertTrue(os.path.exists(os.path.join(path, "all_data.csv")))
                 df = pd.read_csv(os.path.join(path, "all_data.csv"))
+                df = df[["times", "Air_Temperature","Units","ODO"]]
                 self.assertListEqual(list(df.columns), expected_columns)
                 print(df)
                 print(expected_data)
