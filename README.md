@@ -31,7 +31,7 @@ This repo creates a [web-based dashboard](https://lkerie.streamlit.app/) which d
 
 # Project Layout:
 
-![Alt text](Docs/image-6.png)
+![Alt text](Docs/Images/DirectoryStructure.png)
 
 # Data
 
@@ -42,10 +42,8 @@ This repo creates a [web-based dashboard](https://lkerie.streamlit.app/) which d
 Throughout the backend code, project is used to describe which time period the data is coming from. In this instance, data is pulled data from three sources:
 
 - ichart - data between 2006 - 2011
-- "old" project database on WQData live\* - data between 2014 - 2020
-- "new" project database on WQData live\* - data between 2014 - present
-
-\*link for WQData live: https://www.wqdatalive.com/
+- "old" project database on [WQData live](https://www.wqdatalive.com/) - data between 2014 - 2020
+- "new" project database on [WQData live](https://www.wqdatalive.com/) - data between 2014 - present
 
 ### Device
 
@@ -214,6 +212,7 @@ The software works by filtering the data down from a **very** large dataset to a
 
 ### Main Page Selections
 
+![Alt Text](Docs/Images/MainPageTempSelections.PNG)
 **Select data interval:** Choose whether to display data from an hourly or daily frequency. Please note, an hourly frequency will result in significantly longer wait times for processing.  
 **Select Data Locations:** Choose from what sites to view data. Multiple sites can be selected to save processing time if the objective is to toggle between multiple locations.  
 **Choose Graph Type**  
@@ -227,6 +226,7 @@ The software works by filtering the data down from a **very** large dataset to a
 
 ### Left Selection Pane
 
+![Alt Text](Docs/Images/LeftSelectionPane.PNG)  
 **Choose start/end-date:** Select the time range to pull data from. Note: Data may not be available for all chosen times.  
 **Choose desired locations:** Select a location to view the data from in the current plot.  
 **Choose a variable:** Select the variable to be plotted
@@ -234,7 +234,10 @@ The software works by filtering the data down from a **very** large dataset to a
 ### Viewing Plots
 
 Plots include added functionality for readability. Users can pan and zoom on the data. Additionally, .png files of the plots can be saved by clicking the camera icon. It becomes visible when mousing over the upper right corner of the plot.  
+![Alt Text](Docs/Images/ChronologicalPlotEx.PNG)
 Additionally, below each plot is a table containing all of the currently plotted data. This data can be exported to a .csv file by clicking the download button. The button becomes visible when mousing over the upper right corner above the table.
+
+![Alt Text](Docs/Images/TabData.PNG)
 
 # [Advanced Time Series Statistics and Anomaly Detection](https://lkerie.streamlit.app/Advanced_Statistics)
 
@@ -244,11 +247,11 @@ To begin, the user is prompted to select whether they want to view hourly or dai
 
 Data collection sites are displayed on a dynamic map, which allows the user to zoom in and out, pan around the map, and colors the selected site in **red**. Hovering over the icon in the map will display the name of the site.
 
-![Alt text](Docs/image-1.png)
+![Alt text](Docs/Images/DataCollectionMap.png)
 
 Users can then select the Start-date ,end-date, and variable they would like to view from the sidebar. Time series data is then visualized with a smooth line fit to the data in blue.
 
-![Alt text](Docs/image-2.png)
+![Alt text](Docs/Images/TimeSeriesViz.png)
 
 **NOTE:** Not all variables are available for all sites and all time periods. Significant data gaps exist in the data. If seleced time period or variable does not exist, no data will be displayed
 
@@ -256,7 +259,7 @@ If the user is interesting in observing the valued displayed, a _Show Selected D
 
 This will display the data in a table below the plot. The user has the functionality to scroll through the data, filter each collumn in ascending or descending order, and download the data as a CSV file.
 
-![Alt text](Docs/image-3.png)
+![Alt text](Docs/Images/AdvDatTable.png)
 
 ### Anomaly Detection
 
@@ -270,11 +273,11 @@ Anomalies are identified by detecting underlying seaonal and trend components of
 
 After selecting the user-prefered variabled for **Period** and **IQR alpha**, the dashboard displays the time series data with added anomaly bands displayed in gray. Data points that fall outside of this range are colored red to clearly indicate that they are considered anomalies given the user-selected parameters. User can hover over these points to get further data.
 
-![Alt text](Docs/image-4.png)
+![Alt text](Docs/Images/PlotAnomalyBands.png)
 
 Finally, the "Show Statistical Decomposition" button below the plot will display the statistical decomposition of the time series data. This will display the seasonal, trend, and residual components of the data.
 
-![Alt text](Docs/image-5.png)
+![Alt text](Docs/Images/StatDecomp.png)
 
 ## Bugs
 
