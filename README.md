@@ -4,7 +4,8 @@
 
 [Background](#background)  
 [Data Definitions](#data-definitions)  
-[Project Layout](#project-layout)  
+[Project Layout](#project-layout)
+[Running the Software](#running-the-software)  
 [Data](#data)  
 [Data Definitions](#data-definitions)  
 [Motivation](#motivation)  
@@ -32,6 +33,42 @@ This repo creates a [web-based dashboard](https://lkerie.streamlit.app/) which d
 # Project Layout:
 
 ![Alt text](Docs/Images/DirectoryStructure.png)
+
+# Running the Software
+
+The dashboard is available online from the forked repo [here](https://lkerie.streamlit.app/).
+
+However, further development will require running the application locally.
+**Steps:**
+
+1. Navigate into the /LakeErie directory
+
+```
+~\LakeErie
+```
+
+2. Create and activate a [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#) environment using the supplied environment.yml file.
+
+```
+conda env create --name envname --file=environments.yml
+conda activate envname
+```
+
+3. Navigate to the _Home.py_ file location.
+
+```
+cd ~/LakeErie/codebase/src
+```
+
+4. Use Streamlit to run the file.
+
+```
+streamlit run Home.py
+```
+
+5. In the command prompt, cntl click the link to open the locally hosted dashboard.
+
+   Real-time changes can be made and viewed on the dashboard by selecting the overflow menu (the vertical three dots) and clicking "Rerun"
 
 # Data
 
